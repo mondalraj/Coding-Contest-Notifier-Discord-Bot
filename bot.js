@@ -1,9 +1,11 @@
 const dotenv = require("dotenv");
 dotenv.config();
 
-const Discord = require("discord.js");
+const { Client, Intents, MessageEmbed } = require("discord.js");
+const codechef = require("./contests/codechef").default;
+
 const prefix = "$";
-const client = new Discord.Client({
+const client = new Client({
   allowedMentions: {
     parse: ["users", "roles"],
     repliedUser: true,
@@ -18,8 +20,18 @@ const client = new Discord.Client({
   ],
 });
 
-client.on("ready", () => {
+client.on("ready", async () => {
   console.log(`Logged in as ${client.user.tag}!`);
+  const channel = client.channels.cache.get(process.env.CP_CONTESTS_CHANNEL_ID);
+  console.log(new Date().getHours());
+  // Send Contest Reminders between 15-16 hours only once
+  setInterval(async () => {
+    var hour = new Date().getHours();
+    if (hour > 15 && hour < 16) {
+      const data = await codechef();
+      sendContestHandler(data, channel);
+    }
+  }, 1000 * 60 * 60);
 });
 
 client.on("messageCreate", (msg) => {
@@ -30,8 +42,34 @@ client.on("messageCreate", (msg) => {
 
   // test command
   if (command === "testing") {
-    msg.channel.send("Coding Contest Notifier Bot is running properly!");
+    msg.channel.send(
+      `Coding Contest Notifier Bot is running properly, Thanks ${msg.author.username}`
+    );
   }
 });
+
+const sendContestHandler = (data, channel) => {
+  data.forEach((contest) => {
+    const embedTemplate = new MessageEmbed()
+      .setColor("#61ab70")
+      .setTitle(contest.name)
+      .setURL(contest.url)
+      .setAuthor({
+        name: contest.organizer,
+        iconURL: contest.orgLogo,
+      })
+      .addFields(
+        { name: "Date", value: contest.date },
+        { name: "Time", value: contest.time, inline: true },
+        { name: "Duration", value: contest.duration, inline: true }
+      );
+
+    channel.send({ embeds: [embedTemplate] });
+  });
+};
+
+// setInterval(() => {
+//   console.log("Code is running");
+// }, 3000);
 
 client.login(process.env.DISCORD_BOT_TOKEN);
