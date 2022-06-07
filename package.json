@@ -1,0 +1,28 @@
+{
+  "name": "coding-contest-notifier-discord-bot",
+  "version": "1.0.0",
+  "description": "",
+  "main": "bot.js",
+  "scripts": {
+    "start": "node bot.js",
+    "dev": "nodemon bot.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mondalraj/Coding-Contest-Notifier-Discord-Bot.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/mondalraj/Coding-Contest-Notifier-Discord-Bot/issues"
+  },
+  "homepage": "https://github.com/mondalraj/Coding-Contest-Notifier-Discord-Bot#readme",
+  "dependencies": {
+    "discord.js": "^13.8.0",
+    "dotenv": "^16.0.1"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.16"
+  }
+}
