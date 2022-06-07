@@ -8,6 +8,7 @@ const client = new Discord.Client({
     parse: ["users", "roles"],
     repliedUser: true,
   },
+  partials: ["MESSAGE"],
   intents: [
     "GUILDS",
     "GUILD_MESSAGES",
@@ -21,14 +22,14 @@ client.on("ready", () => {
   console.log(`Logged in as ${client.user.tag}!`);
 });
 
-client.on("message", (msg) => {
+client.on("messageCreate", (msg) => {
   if (!msg.content.startsWith(prefix) || msg.author.bot) return;
 
   const args = msg.content.slice(prefix.length).split(/ +/);
   const command = args.shift().toLowerCase();
 
   // test command
-  if (command === "test") {
+  if (command === "testing") {
     msg.channel.send("Coding Contest Notifier Bot is running properly!");
   }
 });
