@@ -1,7 +1,7 @@
 const dotenv = require("dotenv");
 dotenv.config();
 
-const { Client, Intents, MessageEmbed } = require("discord.js");
+const { Client, MessageEmbed } = require("discord.js");
 const codechef = require("./contests/codechef").default;
 
 const prefix = "$";
@@ -22,19 +22,19 @@ const client = new Client({
 
 client.on("ready", async () => {
   console.log(`Logged in as ${client.user.tag}!`);
-  const channel = client.channels.cache.get(process.env.CP_CONTESTS_CHANNEL_ID);
-  console.log(new Date().getHours());
-  // Send Contest Reminders between 15-16 hours only once
-  setInterval(async () => {
-    var hour = new Date().getHours();
-    if (hour > 15 && hour < 16) {
-      const data = await codechef();
-      sendContestHandler(data, channel);
-    }
-  }, 1000 * 60 * 60);
+  // const channel = client.channels.cache.get(process.env.CP_CONTESTS_CHANNEL_ID);
+
+  // Automatically Send Contest Reminders between 15-16 hours only once
+  // setInterval(async () => {
+  //   var hour = new Date().getHours();
+  //   if (hour > 15 && hour < 16) {
+  //     const data = await codechef();
+  //     sendContestHandler(data, channel);
+  //   }
+  // }, 1000 * 60 * 60);
 });
 
-client.on("messageCreate", (msg) => {
+client.on("messageCreate", async (msg) => {
   if (!msg.content.startsWith(prefix) || msg.author.bot) return;
 
   const args = msg.content.slice(prefix.length).split(/ +/);
@@ -45,6 +45,15 @@ client.on("messageCreate", (msg) => {
     msg.channel.send(
       `Coding Contest Notifier Bot is running properly, Thanks ${msg.author.username}`
     );
+  }
+
+  // Send all codechef contests
+  if (command === "codechef") {
+    const channel = client.channels.cache.get(
+      process.env.CP_CONTESTS_CHANNEL_ID
+    );
+    const data = await codechef();
+    sendContestHandler(data, channel);
   }
 });
 

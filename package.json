@@ -1,5 +1,5 @@
 {
-  "name": "coding-contest-notifier-discord-bot",
+  "name": "nova-discord-bot",
   "version": "1.0.0",
   "description": "",
   "main": "bot.js",
@@ -9,15 +9,15 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/mondalraj/Coding-Contest-Notifier-Discord-Bot.git"
+    "url": "git+https://github.com/mondalraj/Nova-Discord-Bot.git"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/mondalraj/Coding-Contest-Notifier-Discord-Bot/issues"
+    "url": "https://github.com/mondalraj/Nova-Discord-Bot/issues"
   },
-  "homepage": "https://github.com/mondalraj/Coding-Contest-Notifier-Discord-Bot#readme",
+  "homepage": "https://github.com/mondalraj/Nova-Discord-Bot#readme",
   "dependencies": {
     "discord.js": "^13.8.0",
     "dotenv": "^16.0.1",
